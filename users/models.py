@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
@@ -31,7 +32,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     full_name = models.CharField(max_length=64)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+    followings = models.ManyToManyField('self', symmetrical=False, related_name="followers")
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+
+    def get_public_blogs(self):
+        return self.blog_set.filter(pub_date__lte=timezone.now())
