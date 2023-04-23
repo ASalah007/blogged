@@ -5,7 +5,7 @@ from rest_framework import generics, mixins
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Blog, BlogInteraction
-from .serializers import BlogSerializer, BlogInteractionSerializer
+from .serializers import BlogSerializer, BlogInteractionSerializer, BlogCommentSerializer
 
 
 class BlogDetailView(generics.RetrieveUpdateDestroyAPIView, mixins.CreateModelMixin):
@@ -58,3 +58,12 @@ class BlogInteractionView(mixins.CreateModelMixin,
         if blog_interaction:
             return self.partial_update(request, *args, **kwargs)
         return self.create(request, *args)
+
+
+class BlogCommentView(generics.ListCreateAPIView):
+    serializer_class = BlogCommentSerializer
+
+    def get_queryset(self):
+        blog = get_object_or_404(Blog, pk=self.kwargs.get("pk"))
+        return blog.blogcomment_set.all()
+    

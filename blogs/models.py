@@ -42,3 +42,10 @@ class BlogInteraction(models.Model):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     interaction = models.PositiveSmallIntegerField(choices=Interaction.choices)
+
+
+class BlogComment(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    text = models.TextField()
+    reply_to = models.ForeignKey("self", on_delete=models.CASCADE, null=True)
