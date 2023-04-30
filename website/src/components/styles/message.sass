@@ -1,0 +1,28 @@
+.message 
+    position: absolute
+    top: -10rem
+    display: flex
+    gap: 5rem
+    border: .2rem solid black
+    border-radius: 2rem
+    padding: 2rem
+
+
+.close-button
+    &:hover
+        cursor: pointer
+
+
+@mixin theme($bg, $bc, $c)  
+    background-color: $bg
+    border-color: $bc
+    color: $c
+    
+.success
+    @include theme(#d4edda, green, green)
+
+.info 
+    @include theme(#d1ecf1, #1483BE, #1483BE)
+
+.error
+    @include theme(#f8d7da, #82202e, #82202e)

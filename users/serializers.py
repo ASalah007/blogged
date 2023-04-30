@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from .models import Token
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -35,6 +36,10 @@ class FollowSerializer(serializers.Serializer):
         return {"user": validated_data.get("user"), "follow": validated_data.get("follow")}
 
 
+class TokenSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = Token
+        fields = "__all__"
 
 
 

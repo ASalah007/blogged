@@ -1,8 +1,11 @@
 
 from rest_framework import generics, mixins
-from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework import status
 from django.contrib.auth import get_user_model
-from .serializers import UserSerializer, FollowSerializer
+from .models import Token
+from .serializers import UserSerializer, FollowSerializer, TokenSerializer
+
 
 
 class UserCreateView(generics.CreateAPIView):
@@ -27,3 +30,20 @@ class FollowListView(generics.ListAPIView):
         if list_type == "followers":
             return self.request.user.followers
         return self.request.user.followings
+
+
+class VerificationView(generics.GenericAPIView):
+    serializer_class = TokenSerializer
+    queryset = Token.objects
+    lookup_field = "token"
+
+    def get(self, request, token):
+        token = self.get_object()
+        user = token.user
+        user.is_active = True
+        user.save()
+        return Response("account acctivated successfully", status=status.HTTP_200_OK)
+
+
+
+
