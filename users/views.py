@@ -1,11 +1,9 @@
-
-from rest_framework import generics, mixins
+from rest_framework import generics, mixins, status
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
 from .models import Token
 from .serializers import UserSerializer, FollowSerializer, TokenSerializer
-
 
 
 class UserCreateView(generics.CreateAPIView):
@@ -13,9 +11,13 @@ class UserCreateView(generics.CreateAPIView):
     queryset = get_user_model().objects
 
 
-class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+class UserDetailView(generics.RetrieveAPIView):
     serializer_class = UserSerializer
     queryset = get_user_model().objects
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
 
 
 class FollowCreateView(generics.CreateAPIView):

@@ -1,0 +1,81 @@
+@use '../../styles/mixins'
+
+.nav 
+    display: flex
+    align-items: center
+    gap: 2rem
+    padding: 1rem 1.5rem
+    border: 1px solid #ddd
+
+.menu
+    padding: 1.2rem
+    display: flex
+    align-items: center
+    justify-content: center
+    border-radius: 100%
+
+    &:hover
+        background: #eee
+        cursor: pointer
+
+    &:active
+        background: #dfdfdf
+
+
+.left
+    display: flex
+    align-items: center
+    gap: 1rem
+    user-select: none
+
+
+.center
+    flex-grow: 1
+    display: flex
+    align-items: center
+    justify-content: center
+
+.search-bar
+    display: flex
+    align-items: center
+    padding: 1rem 1.5rem
+    gap: 1rem
+    background-color: #eceff1
+    flex-grow: 1
+    max-width: 60rem
+    border-radius: 1.3rem
+    border: 1px solid transparent
+
+    &:focus-within
+        background-color: white
+        @include mixins.shadow()
+        border-color: #eee
+
+    input
+        flex-grow: 1
+        @include mixins.clean()
+        border: 0
+        background-color: #eceff1
+
+        &:focus
+            background-color: white
+        
+
+.profile
+    width: 2rem
+    height: 2rem
+    display: flex
+    justify-content: center
+    align-items: center
+    border-radius: 100%
+    background-color: darkgreen
+    padding: .7rem
+    color: white
+    font-weight: bold
+    font-size: small
+    user-select: none
+    pointer-events: all
+
+    &:hover
+        cursor: pointer
+

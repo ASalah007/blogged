@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 from django.dispatch import receiver
 from django.db.models.signals import pre_save
+from django.utils import timezone
 
 
 
@@ -13,7 +14,7 @@ class Blog(models.Model):
     thumbnail = models.ImageField(upload_to='blog_thumbnails/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    pub_date = models.DateTimeField(null=True, auto_now_add=True)
+    pub_date = models.DateTimeField(null=True, blank=True)
     author= models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
 
     class Meta: 
@@ -49,3 +50,17 @@ class BlogComment(models.Model):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
     text = models.TextField()
     reply_to = models.ForeignKey("self", on_delete=models.CASCADE, null=True)
+
+
+class BlogStats(models.Model):
+    blog = models.OneToOneField(Blog, on_delete=models.CASCADE)
+    comments_count = models.PositiveIntegerField(null=True, blank=True, default=0)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+    def update_stats(self, force=False):
+        if not force and self.updated_at > timezone.now() - timezone.timedelta(days=1):
+            return
+
+        self.comments_count = self.blog.blogcomment_set.all().count()
+        self.save()

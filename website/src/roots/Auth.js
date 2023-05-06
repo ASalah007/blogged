@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./styles/auth.sass";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -10,8 +9,9 @@ import { CircularProgress } from "@mui/material";
 import { signIn, signUp } from "../services/public_services";
 import Cookies from "universal-cookie";
 import Message from "../components/Message";
+import styles from "./styles/auth.module.sass";
 
-function Auth() {
+function Auth({ loadUserProfile }) {
   const [signingIn, setSigningIn] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,16 +37,15 @@ function Auth() {
       const cookies = new Cookies();
       cookies.set("access", data.access);
       cookies.set("refresh", data.refresh);
+      loadUserProfile();
       navigate("/");
       return;
     }
-    console.log("abosalah");
     if (!validateInputs()) {
       return;
     }
     setLoading(true);
     const data = await signUp({ email, password, full_name: fullName });
-    console.log(data);
     if (data.errors) {
       setSignUpError(
         Object.values({ ...data.errors.email, ...data.errors.password })[0]
@@ -75,7 +74,7 @@ function Auth() {
   }
 
   return (
-    <div className="background">
+    <div className={styles.background}>
       {showActivateMessage && (
         <Message type="success" onClose={() => setShowActivateMessage(false)}>
           Check your email to activate your account.
@@ -88,10 +87,10 @@ function Auth() {
         </Message>
       )}
 
-      <div className="card">
-        <div className="header">
-          <div className="greetings">Welcome {signingIn && "Back"}</div>
-          <div className="hint">
+      <div className={styles.card}>
+        <div className={styles.header}>
+          <div className={styles.greetings}>Welcome {signingIn && "Back"}</div>
+          <div className={styles.hint}>
             {signingIn
               ? "Hey, Enter your details to get sign in to your account."
               : "Hey, Fill the bellow fields to create a new account."}
@@ -99,10 +98,10 @@ function Auth() {
         </div>
 
         {signInErrors.length > 0 && (
-          <div className="error-messages">{signInErrors}</div>
+          <div className={styles["error-messages"]}>{signInErrors}</div>
         )}
 
-        <div className="form">
+        <div className={styles.form}>
           {!signingIn && (
             <input
               type="text"
@@ -114,7 +113,7 @@ function Auth() {
           )}
 
           {emailErrors.length > 0 && (
-            <ul className="error-messages">
+            <ul className={styles["error-messages"]}>
               {emailErrors.map((e) => (
                 <li>{e}</li>
               ))}
@@ -129,7 +128,7 @@ function Auth() {
           />
 
           {passwordErrors.length > 0 && (
-            <ul className="error-messages">
+            <ul className={styles["error-messages"]}>
               {passwordErrors.map((e) => (
                 <li>{e}</li>
               ))}
@@ -144,16 +143,16 @@ function Auth() {
           />
 
           {signingIn && (
-            <div className="forgot-your-password">
+            <div className={styles["forgot-your-password"]}>
               Forgot your password?
-              <Link to="" className="link">
+              <Link to="" className={styles.link}>
                 Reset Password
               </Link>
             </div>
           )}
         </div>
 
-        <div className="sign-button" onClick={(e) => handleSubmit(e)}>
+        <div className={styles["sign-button"]} onClick={(e) => handleSubmit(e)}>
           {loading ? (
             <CircularProgress color="inherit" size={23} />
           ) : (
@@ -161,13 +160,13 @@ function Auth() {
           )}
         </div>
 
-        <div className="divider">
-          <div className="bar"></div>
+        <div className={styles.divider}>
+          <div className={styles.bar}></div>
           <div>Or Sign {signingIn ? "in" : "up"} with</div>
-          <div className="bar"></div>
+          <div className={styles.bar}></div>
         </div>
 
-        <div className="third-party-auth">
+        <div className={styles["third-party-auth"]}>
           <div>
             <GoogleIcon fontSize="large" /> <span>Google</span>
           </div>
@@ -179,7 +178,7 @@ function Auth() {
           </div>
         </div>
 
-        <div className="footer">
+        <div className={styles.footer}>
           {signingIn ? (
             <div>
               Don't have an account?

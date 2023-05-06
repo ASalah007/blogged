@@ -1,0 +1,72 @@
+@use '../../styles/mixins'
+@use '../../styles/variables'
+
+.sidebar
+    width: 25rem
+    border: 1px solid #ddd
+    border-top: 0
+    display: flex
+    flex-direction: column
+    align-items: start
+    padding: 2rem
+    padding-left: 0
+    gap: 1rem
+
+
+.new-post
+    @include mixins.shadow()
+
+    display: flex
+    justify-content: center
+    align-content: center
+    gap: .5rem
+    padding: 1rem 1.5rem
+    font-size: 1.6rem
+    border-radius: 2.5rem
+    color: variables.$primary_color_dark
+    user-select: none
+    pointer-events: all
+    font-weight: bold
+    margin-left: 1rem
+
+    &:hover
+        cursor: pointer
+    
+    &:active
+        background-color: variables.$primary_color_light
+
+    span
+        display: flex 
+        align-items: center
+
+
+.divider 
+    border-top: 1px solid #ddd
+    margin: 1rem 0
+    width: 23rem
+
+.button-list
+    display: flex
+    flex-direction: column
+    a
+        color: #546e7a
+        display: flex
+        align-items: center
+        gap: 1rem
+        text-decoration: none
+        padding: 1.5rem
+        padding-left: 3.5rem
+        padding-right: 8rem
+        border-radius: .5rem
+
+        &:hover
+            background-color: #eee
+
+        &:active
+            background-color: #ddd
+
+        span
+            font-size: 1.7rem
+            font-weight: light
+            color: black
+

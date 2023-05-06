@@ -9,6 +9,9 @@ export const apiLinks = {
   refresh: "token/refresh",
   signin: "token/",
   signup: "users/signup/",
+  profile: "users/profile/",
+  blogPosts: "blogs/list/",
+  blogStats: "blogs/stats/",
 };
 
 for (let key of Object.keys(apiLinks)) {
@@ -25,7 +28,7 @@ export const axiosAuthenticated = axios.create({
   },
 });
 
-function isTokenValid(token) {
+export function isTokenValid(token) {
   if (!token) return false;
   const jwt_object = jwt_decode(token);
   return jwt_object.exp && jwt_object.exp * 1000 > Date.now();
@@ -37,7 +40,7 @@ axiosAuthenticated.interceptors.request.use(async function (config) {
   // put access_token if it is valid in the header
   const access_token = cookies.get("access");
   if (isTokenValid(access_token)) {
-    config.headers.Authorization = "Bearer" + access_token;
+    config.headers.Authorization = "Bearer " + access_token;
     return config;
   }
 
@@ -48,7 +51,7 @@ axiosAuthenticated.interceptors.request.use(async function (config) {
       refresh: refresh_token,
     });
     cookies.set("access", response.data.access);
-    config.headers.Authorization = response.data.access;
+    config.headers.Authorization = "Bearer " + response.data.access;
     return config;
   }
 

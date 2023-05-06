@@ -3,9 +3,10 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from rest_framework import generics, mixins
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from .models import Blog, BlogInteraction
-from .serializers import BlogSerializer, BlogInteractionSerializer, BlogCommentSerializer
+from .serializers import BlogSerializer, BlogInteractionSerializer, BlogCommentSerializer, BlogStatsSerializer
 
 
 class BlogDetailView(generics.RetrieveUpdateDestroyAPIView, mixins.CreateModelMixin):
@@ -22,7 +23,6 @@ class BlogView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         return self.request.user.blog_set
-
 
 
 class UserPublicBlogView(generics.ListAPIView):
@@ -67,3 +67,17 @@ class BlogCommentView(generics.ListCreateAPIView):
         blog = get_object_or_404(Blog, pk=self.kwargs.get("pk"))
         return blog.blogcomment_set.all()
     
+
+class BlogStatsView(generics.GenericAPIView):
+    serializer_class = BlogStatsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return self.request.user.blog_set
+
+    def get(self, request, pk):
+        blog = self.get_object()
+        blog_stats = blog.blogstats
+        blog_stats.update_stats()
+        ser = self.get_serializer(blog_stats)
+        return Response(ser.data)

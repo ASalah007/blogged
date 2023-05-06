@@ -9,5 +9,6 @@ urlpatterns = [
     path("list_followers/", views.FollowListView.as_view(),{"list_type": "followers"}, name="list_followers"),
     path("list_followings/", views.FollowListView.as_view(), {"list_type": "followings"}, name="list_followings"),
     path("activate/<str:token>/", views.VerificationView.as_view(), name="verify_user"),
+    path("profile/", views.UserDetailView.as_view(), name="user_profile"),
 ]
 

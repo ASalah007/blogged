@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Blog, BlogInteraction, BlogComment
+from .models import Blog, BlogInteraction, BlogComment, BlogStats
+from django.db import transaction
 
 
 class BlogSerializer(serializers.ModelSerializer):
@@ -8,10 +9,14 @@ class BlogSerializer(serializers.ModelSerializer):
         exclude = ["author", "slug"]
     
 
+    @transaction.atomic
     def create(self, validated_data):
         request = self.context.get("request")
         validated_data["author"] = request.user
-        return super().create(validated_data)
+        blog = super().create(validated_data)
+        BlogStats.objects.create(blog=blog)
+        return blog
+
 
 
 class BlogInteractionSerializer(serializers.ModelSerializer):
@@ -51,4 +56,10 @@ class BlogCommentSerializer(serializers.ModelSerializer):
         self.add_extra_kwargs(validated_data)
         return super().update(instance, validated_data)
     
+
+class BlogStatsSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = BlogStats
+        fields = "__all__"
+
 

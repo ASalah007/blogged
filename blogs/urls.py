@@ -13,4 +13,5 @@ urlpatterns = [
     path('interact/', views.BlogInteractionView.as_view(), name="blog_interact"),
     path('comment/', views.BlogCommentView.as_view(), name="blog_comment"),
     path("comments/<int:pk>/", views.BlogCommentView.as_view(), name="list_comments"),
+    path("stats/<int:pk>/", views.BlogStatsView.as_view(), name="list_comments"),
 ]
