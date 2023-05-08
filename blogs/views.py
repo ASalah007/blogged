@@ -78,6 +78,6 @@ class BlogStatsView(generics.GenericAPIView):
     def get(self, request, pk):
         blog = self.get_object()
         blog_stats = blog.blogstats
-        blog_stats.update_stats()
+        blog_stats.update_stats(force=True)
         ser = self.get_serializer(blog_stats)
         return Response(ser.data)

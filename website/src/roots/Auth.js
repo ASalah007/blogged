@@ -35,8 +35,15 @@ function Auth({ loadUserProfile }) {
         return;
       }
       const cookies = new Cookies();
-      cookies.set("access", data.access);
-      cookies.set("refresh", data.refresh);
+      cookies.set("access", data.access, {
+        path: "/",
+        expires: new Date("2200-01-01"),
+      });
+      cookies.set("refresh", data.refresh, {
+        path: "/",
+        expires: new Date("2200-01-01"),
+      });
+
       loadUserProfile();
       navigate("/");
       return;

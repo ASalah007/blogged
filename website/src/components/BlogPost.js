@@ -4,14 +4,15 @@ import { fetchBlogStats } from "../services/private_services";
 import styles from "./styles/blogpost.module.sass";
 import ModeCommentIcon from "@mui/icons-material/ModeComment";
 import StackedBarChartIcon from "@mui/icons-material/StackedBarChart";
+import CheckBox from "./utils/CheckBox";
 
-function BlogPost({ post }) {
+function BlogPost({ post, onSelect, selectEnable }) {
   const updatedAt = new Date(post.updated_at).toDateString().split(" ");
   const lastModifiedAt = updatedAt[1] + " " + updatedAt[2];
   const [stats, setStats] = useState({ comments_count: 0, views_count: 0 });
 
   useEffect(() => {
-    setTimeout(()=>{}, )
+    setTimeout(() => {});
     fetchBlogStats(post.id).then((data) => {
       setStats(data);
       console.log(data);
@@ -20,6 +21,7 @@ function BlogPost({ post }) {
 
   return (
     <div className={styles.post}>
+      {selectEnable && <CheckBox />}
       <Link to="/">
         <div className={styles.thumbnail}>
           {post.thumbnail ? (

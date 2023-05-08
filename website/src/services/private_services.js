@@ -16,7 +16,7 @@ export async function fetchUserBlogPosts() {
     return response?.data;
   } catch (errors) {
     console.log(errors);
-    return null;
+    return [];
   }
 }
 
@@ -26,6 +26,6 @@ export async function fetchBlogStats(post_id) {
     return response?.data;
   } catch (errors) {
     console.log(errors);
-    return null;
+    return [];
   }
 }
