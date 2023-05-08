@@ -1,6 +1,6 @@
 # blogged application 
 
-# project beginning
+# Roadmap
 
 1. User can log in into their profiles 
 2. User can create a blog on the site and type it using **wysiwyg**
