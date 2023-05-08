@@ -1,5 +1,12 @@
 # blogged application 
 
+# screen shots of ongoing work
+
+![image](https://user-images.githubusercontent.com/70268434/236712126-9dea79b0-b352-4d37-8744-a687d76ad10f.png)
+
+![image](https://user-images.githubusercontent.com/70268434/236712167-d6ee29b3-72b0-4d16-9a27-69d24d048326.png)
+
+
 # Roadmap
 
 1. User can log in into their profiles 
