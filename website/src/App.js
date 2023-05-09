@@ -3,7 +3,7 @@ import Home from "./roots/Home.js";
 import BlogBase from "./roots/BlogBase";
 import BlogPosts from "./roots/BlogPosts";
 import Auth from "./roots/Auth";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import UserContext from "./contexts/UserContext.js";
 import { fetchUserProfile } from "./services/private_services.js";
 import { isAuthenticated } from "./services/public_services.js";
@@ -29,7 +29,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="blog" element={<BlogBase />}>
-          <Route path="posts/:userId" element={<BlogPosts />} />
+          <Route path="posts/" element={<BlogPosts />} />
         </Route>
 
         <Route

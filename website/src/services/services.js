@@ -12,6 +12,7 @@ export const apiLinks = {
   profile: "users/profile/",
   blogPosts: "blogs/list/",
   blogStats: "blogs/stats/",
+  blogUpdate: "blogs/detail/",
 };
 
 for (let key of Object.keys(apiLinks)) {

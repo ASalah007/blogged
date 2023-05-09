@@ -23,7 +23,6 @@
 .select 
 
 
-
 .thumbnail
     height: 6.5rem
     width: 7rem
@@ -54,15 +53,36 @@
 
 .right
     margin-left: auto
+    margin-top: auto
     display: flex
     flex-direction: column
-    gap: 1rem
+    gap: 2.5rem
 
+
+.actions
+    display: flex
+    gap: 2rem
+
+    div 
+        transform: scale(1.7)
+        color: #888
+        display: flex
+        justify-content: center
+        align-items: center
+        padding: .3rem
+        border-radius: 100%
+
+        &:hover
+            background-color: #eee
+
+        &:active
+            background-color: #ddd
 
 .stats
     display: flex
     gap: 1.5rem
     font-size: 1.5rem
+    margin-left: auto
 
 
 .comments
