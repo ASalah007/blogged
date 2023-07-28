@@ -35,7 +35,6 @@ function BlogPost({ post: _post, onSelect, selectEnable }) {
     [<VisibilityIcon />, "View", (e) => {}],
   ];
 
-  console.log("rendered");
   const draftActions = [
     [
       <SendIcon />,
@@ -63,7 +62,7 @@ function BlogPost({ post: _post, onSelect, selectEnable }) {
       onMouseLeave={() => setDisplayActions(false)}
     >
       {selectEnable && <CheckBox />}
-      <Link to="/">
+      <Link to={`/blog/post/edit/${post.id}`}>
         <div className={styles.thumbnail}>
           {post.thumbnail ? (
             <img href={post.thumbnail} alt="thumbnail" />

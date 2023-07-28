@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import UserContext from "./contexts/UserContext.js";
 import { fetchUserProfile } from "./services/private_services.js";
 import { isAuthenticated } from "./services/public_services.js";
+import BlogPostEdit from "./roots/BlogPostEdit.js";
 
 function App() {
   const [userProfile, setUserProfile] = useState({});
@@ -30,6 +31,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="blog" element={<BlogBase />}>
           <Route path="posts/" element={<BlogPosts />} />
+          <Route path="post/edit/:postId" element={<BlogPostEdit />} />
         </Route>
 
         <Route
